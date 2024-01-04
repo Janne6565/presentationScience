@@ -14,10 +14,11 @@ player.onRender.subscribe(async () => {
 });
 player.onStateChanged.subscribe((state) => {
   console.log("state", state);
+  if (state.paused == true) {
+    player.togglePlayback();
+    console.log("after", state);
+  }
 });
-console.log("HELLO");
-
-
 
 
 // import "@motion-canvas/player";

@@ -11,6 +11,7 @@ import "@motion-canvas/player";
       url = base + url.slice(1);
       const newElement = document.createElement("motion-canvas-player");
       newElement.setAttribute("auto", player.getAttribute("auto") ?? "true");
+      newElement.setAttribute()
       newElement.setAttribute("src", url);
       player.replaceWith(newElement);
     }

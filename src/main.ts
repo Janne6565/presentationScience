@@ -1,44 +1,55 @@
-import {Stage, Player} from '@motion-canvas/core';
+import {Stage, Player, Presenter, PresenterInfo} from '@motion-canvas/core';
 import project from '../public/animations/project.js';
 
-const stage = new Stage();
-stage.configure(project.meta.getFullRenderingSettings());
-document.body.append(stage.finalBuffer);
+const SOCKET_URL = "ws://localhost:8000/listen-state";
 
-const player = new Player(project);
-player.onRender.subscribe(async () => {
-  stage.render(
-    player.playback.currentScene,
-    player.playback.previousScene,
-  );
+
+const presenter = new Presenter(project);
+
+document.body.append(presenter.stage.finalBuffer);
+presenter.onInfoChanged.subscribe((info) => {
+  console.log("info", info);
 });
-player.onStateChanged.subscribe((state) => {
-  console.log("state", state);
-  if (state.paused == true) {
-    player.togglePlayback();
-    console.log("after", state);
+
+let socket = new WebSocket(SOCKET_URL);
+let currentInfo: PresenterInfo | null = null;
+let currentIndexShouldBe = 0;
+
+socket.onopen = () => {
+  console.log("connected websocket");
+};
+
+socket.onerror = (error) => {
+  console.log(error);
+  socket = new WebSocket(SOCKET_URL);
+};
+
+socket.onclose = () => {
+  console.log("disconnected websocket");
+  socket = new WebSocket(SOCKET_URL);
+};
+
+
+socket.onmessage = (message) => {
+  try {
+    const indexNow = parseInt(message.data);
+    currentIndexShouldBe = indexNow;
+    if (currentInfo && currentInfo.index && indexNow && indexNow > currentInfo.index) {
+      presenter.resume();
+      console.log("Jumping to next slide because ", indexNow, " > ", currentInfo.index);
+    }
+  } catch (ignored) {}
+};
+
+presenter.onInfoChanged.subscribe((info) => {
+  if (info && info.index && info.index < currentIndexShouldBe) {
+    presenter.resume();
+  } 
+  
+  if (info && info.index && info.index > currentIndexShouldBe) {
+    presenter.requestPreviousSlide();
   }
+
+  currentInfo = info;
+  console.log(info);
 });
-
-
-// import "@motion-canvas/player";
-
-// (function prependBase() {
-//   const base = import.meta.env.BASE_URL;
-//   if (!base) {
-//     return;
-//   }
-//   document.querySelectorAll("motion-canvas-player").forEach((player) => {
-//     let url = player.getAttribute("src");
-//     if (url?.startsWith("/")) {
-//       url = base + url.slice(1);
-//       const newElement = document.createElement("motion-canvas-player");
-//       newElement.setAttribute("auto", player.getAttribute("auto") ?? "true");
-//       newElement.setAttribute("src", url);
-//       player.replaceWith(newElement);
-//     }
-//   });
-// })();
-
-
-

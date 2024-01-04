@@ -12,6 +12,7 @@ player.onRender.subscribe(async () => {
     player.playback.previousScene,
   );
 });
+console.log("HELLO");
 
 
 

@@ -7,5 +7,5 @@ import autoplayPlugin from './autoplayPlugin';
 
 export default makeProject({
   scenes: [einleitung, Content, Schluss],
-  plugins: [autoplayPlugin]
+  plugins: [autoplayPlugin()]
 });

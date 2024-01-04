@@ -13,5 +13,6 @@ export default makePlugin({
         player.onRender.subscribe(async (event) => {
             console.log("PLAYER ONLINE")
         })
+        console.log("HEYHO")
     }
 })

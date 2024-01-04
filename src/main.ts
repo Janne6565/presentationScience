@@ -12,6 +12,9 @@ player.onRender.subscribe(async () => {
     player.playback.previousScene,
   );
 });
+player.onStateChanged.subscribe((state) => {
+  console.log("state", state);
+});
 console.log("HELLO");
 
 

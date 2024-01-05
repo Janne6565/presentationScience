@@ -12,7 +12,7 @@ presenter.onInfoChanged.subscribe((info) => {
 });
 
 let socket = new WebSocket(SOCKET_URL);
-let currentInfo: PresenterInfo | null = null;
+let currentInfo: PresenterInfo;
 let currentIndexShouldBe = 0;
 
 socket.onopen = () => {
@@ -34,6 +34,8 @@ socket.onmessage = (message) => {
   console.log("CurrentInfo", currentInfo);
   try {
     const indexNow = parseInt(message.data);
+    console.log("Index now", indexNow)
+
     currentIndexShouldBe = indexNow;
     if (currentInfo && currentInfo.index && indexNow && indexNow > currentInfo.index) {
       presenter.resume();
@@ -43,6 +45,7 @@ socket.onmessage = (message) => {
 };
 
 presenter.onInfoChanged.subscribe((info) => {
+  currentInfo = info;
   if (info && info.index && info.index < currentIndexShouldBe) {
     presenter.resume();
   } 

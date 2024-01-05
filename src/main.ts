@@ -189,6 +189,9 @@ window.addEventListener("keydown", (event) => {
   if (keyCode in controllMapping && IS_OWNER) {
     controllMapping[keyCode]();
   }
+  if (keyCode == 70) {
+    toggleFullscreen();
+  }
 });
 
 document.body.append(takeControllButton);

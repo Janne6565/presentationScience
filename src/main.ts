@@ -1,4 +1,4 @@
-import { Presenter, PresenterInfo, Vector2 } from "@motion-canvas/core";
+import { Presenter, PresenterInfo, Vector2, Project } from "@motion-canvas/core";
 import project from "../public/animations/project.js";
 
 const ENDPOINT = "wss://jannekeipert.de";
@@ -134,7 +134,7 @@ presenter.present({
   name: "Presenter",
   background: null,
   size: new Vector2(1920, 1080),
-  slide: project.slides[0].name,
+  slide: project.scenes[0].name,
   fps: 60,
   resolutionScale: 2,
   colorSpace: "srgb"

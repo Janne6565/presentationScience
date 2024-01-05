@@ -11,16 +11,6 @@ presenter.onInfoChanged.subscribe((info) => {
   console.log("info", info);
 });
 
-presenter.present({
-  name: 'Presentation',
-  fps: 30,
-  slide: null,
-  size: new Vector2(1920, 1080),
-  resolutionScale: 0,
-  colorSpace: 'srgb',
-  background: null
-});
-
 let socket = new WebSocket(SOCKET_URL);
 let currentInfo: PresenterInfo | null = null;
 let currentIndexShouldBe = 0;

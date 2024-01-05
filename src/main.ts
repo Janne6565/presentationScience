@@ -44,11 +44,11 @@ socket.onmessage = (message) => {
 
 presenter.onInfoChanged.subscribe((info) => {
   currentInfo = info;
-  if (info && info.index && info.index < currentIndexShouldBe) {
+  if (info && info.index != null && info.index < currentIndexShouldBe) {
     presenter.resume();
   } 
   
-  if (info && info.index && info.index > currentIndexShouldBe) {
+  if (info && info.index != null && info.index > currentIndexShouldBe) {
     presenter.requestPreviousSlide();
   }
   console.log(info);

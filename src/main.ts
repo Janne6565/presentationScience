@@ -1,4 +1,4 @@
-import {Stage, Player, Presenter, PresenterInfo} from '@motion-canvas/core';
+import {Stage, Player, Presenter, PresenterInfo, Vector2} from '@motion-canvas/core';
 import project from '../public/animations/project.js';
 
 const SOCKET_URL = "wss://jannekeipert.de/listen-state";
@@ -9,6 +9,16 @@ const presenter = new Presenter(project);
 document.body.append(presenter.stage.finalBuffer);
 presenter.onInfoChanged.subscribe((info) => {
   console.log("info", info);
+});
+
+presenter.present({
+  name: 'Presentation',
+  fps: 30,
+  slide: null,
+  size: new Vector2(1920, 1080),
+  resolutionScale: 0,
+  colorSpace: 'srgb',
+  background: null
 });
 
 let socket = new WebSocket(SOCKET_URL);

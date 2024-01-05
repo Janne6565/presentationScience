@@ -133,10 +133,7 @@ presenter.onInfoChanged.subscribe((info) => {
 presenter.present({
   name: "Presenter",
   background: null,
-  size: new Vector2({
-      "x": 1920,
-      "y": 1080
-  }),
+  size: new Vector2(1920, 1080),
   slide: project.slides[0].name,
   fps: 60,
   resolutionScale: 2,

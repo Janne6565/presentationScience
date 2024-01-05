@@ -44,7 +44,9 @@ socket.onmessage = (message) => {
       presenter.resume();
       console.log("Jumping to next slide because ", indexNow, " > ", currentInfo.index);
     }
-  } catch (ignored) {}
+  } catch (ignored) {
+    console.log(ignored);
+  }
 };
 
 presenter.onInfoChanged.subscribe((info) => {

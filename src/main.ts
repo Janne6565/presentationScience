@@ -118,6 +118,9 @@ connectWebsocketListen();
 presenter.onInfoChanged.subscribe((info) => {
   currentInfo = info;
   if (info && info.index != null && info.index < currentIndexShouldBe) {
+    if (currentIndexShouldBe > info.index + 1) {
+      presenter.requestNextSlide();
+    }
     presenter.resume();
   }
 
@@ -185,9 +188,7 @@ window.addEventListener("keydown", (event) => {
   const keyCode = event.keyCode;
   if (keyCode in controllMapping && IS_OWNER) {
     controllMapping[keyCode]();
-    console.log("execute command");
   }
-  console.log(event);
 });
 
 document.body.append(takeControllButton);

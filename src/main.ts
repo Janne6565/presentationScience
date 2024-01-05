@@ -1,7 +1,7 @@
-import {Presenter, PresenterInfo, Vector2} from '@motion-canvas/core';
-import project from '../public/animations/project.js';
+import { Presenter, PresenterInfo, Vector2 } from "@motion-canvas/core";
+import project from "../public/animations/project.js";
 
-const ENDPOINT = "wss://jannekeipert.de"
+const ENDPOINT = "wss://jannekeipert.de";
 
 const SOCKET_URL = ENDPOINT + "/listen-state";
 
@@ -13,14 +13,14 @@ const controllMapping = {
   32: () => {
     console.log(ownerSocket);
     ownerSocket?.send(String(currentIndexShouldBe + 1));
-  }, 
+  },
   37: () => {
     ownerSocket?.send(String(currentIndexShouldBe - 1));
   },
   39: () => {
     ownerSocket?.send(String(currentIndexShouldBe + 1));
-  }
-}
+  },
+};
 
 let IS_OWNER = false;
 const presenter = new Presenter(project);
@@ -44,15 +44,15 @@ const requestControll = () => {
       } else {
         console.log("Closed because unauthorized");
       }
-    }
-  
+    };
+
     ownerSocket.onerror = () => {
       console.log("Error occured");
       if (receivedAutherized) {
         ownerSocket = new WebSocket(calculatedUrl);
-      } 
-    }
-  
+      }
+    };
+
     ownerSocket.onmessage = (event) => {
       console.log(event);
       const message = event.data;
@@ -61,12 +61,11 @@ const requestControll = () => {
         IS_OWNER = true;
         receivedAutherized = true;
       }
-    }
-  }
+    };
+  };
 
   connectWebsocketSend();
-}
-
+};
 
 const connectWebsocketListen = () => {
   socket.onopen = () => {
@@ -82,32 +81,41 @@ const connectWebsocketListen = () => {
     console.log("disconnected websocket");
     connectWebsocketListen();
   };
-  
+
   socket.onmessage = (message) => {
     console.log("Received message", message);
     try {
       const indexNow = parseInt(message.data);
       currentIndexShouldBe = indexNow;
       console.log(currentInfo);
-      if (currentInfo && currentInfo.index != null && indexNow > currentInfo.index) {
-        presenter.resume();
-        console.log("Jumping to next slide because ", indexNow, " > ", currentInfo.index);
+      if (currentInfo && currentInfo.index != null) {
+        if (indexNow > currentInfo.index) {
+          presenter.resume();
+          console.log(
+            "Jumping to next slide because ",
+            indexNow,
+            " > ",
+            currentInfo.index
+          );
+        }
+        if (indexNow < currentInfo.index) {
+          presenter.requestPreviousSlide();
+        }
       }
     } catch (ignored) {
       console.log(ignored);
     }
   };
-}
+};
 
 connectWebsocketListen();
 
 presenter.onInfoChanged.subscribe((info) => {
-  console.log(info);
   currentInfo = info;
   if (info && info.index != null && info.index < currentIndexShouldBe) {
     presenter.resume();
-  } 
-  
+  }
+
   if (info && info.index != null && info.index > currentIndexShouldBe) {
     presenter.requestPreviousSlide();
   }
@@ -115,45 +123,46 @@ presenter.onInfoChanged.subscribe((info) => {
 });
 
 presenter.present({
-  name: 'Presentation',
+  name: "Presentation",
   fps: 60,
   slide: project.scenes[0].name,
   size: new Vector2(1920, 1080),
   resolutionScale: 1,
-  colorSpace: 'srgb',
-  background: 'transparent',
+  colorSpace: "srgb",
+  background: "transparent",
 });
 
 var elem = document.documentElement;
 var isOpened = false;
 
 function toggleFullscreen() {
-    if (isOpened) {
-        closeFullscreen();
-    } else {
-        openFullscreen();
-    }
-    isOpened = !isOpened;
+  if (isOpened) {
+    closeFullscreen();
+  } else {
+    openFullscreen();
+  }
+  isOpened = !isOpened;
 }
 function openFullscreen() {
   if (elem.requestFullscreen) {
     elem.requestFullscreen();
-  } 
+  }
 }
 
 function closeFullscreen() {
   if (document.exitFullscreen) {
     document.exitFullscreen();
-  } 
+  }
 }
 
 const fullScreenButton = document.createElement("button");
 const fullScreenImage = document.createElement("img");
-fullScreenImage.src = "https://www.svgrepo.com/download/491638/fullscreen-alt.svg";
+fullScreenImage.src =
+  "https://www.svgrepo.com/download/491638/fullscreen-alt.svg";
 fullScreenButton.appendChild(fullScreenImage);
 fullScreenButton.onclick = () => {
   toggleFullscreen();
-}
+};
 fullScreenButton.classList.add("fullscreenButton");
 document.body.append(fullScreenButton);
 
@@ -164,7 +173,7 @@ takeControllButton.appendChild(takeControllImage);
 
 takeControllButton.onclick = () => {
   requestControll();
-}
+};
 takeControllButton.classList.add("takecontrollButton");
 
 window.addEventListener("keydown", (event) => {
@@ -174,6 +183,6 @@ window.addEventListener("keydown", (event) => {
     console.log("execute command");
   }
   console.log(event);
-})
+});
 
 document.body.append(takeControllButton);

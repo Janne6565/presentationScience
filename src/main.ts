@@ -90,6 +90,9 @@ const connectWebsocketListen = () => {
       console.log(currentInfo);
       if (currentInfo && currentInfo.index != null) {
         if (indexNow > currentInfo.index) {
+          if (indexNow > currentInfo.index + 1) {
+            presenter.requestNextSlide();
+          }
           presenter.resume();
           console.log(
             "Jumping to next slide because ",

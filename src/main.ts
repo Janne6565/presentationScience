@@ -7,9 +7,6 @@ const SOCKET_URL = "wss://jannekeipert.de/listen-state";
 const presenter = new Presenter(project);
 
 document.body.append(presenter.stage.finalBuffer);
-presenter.onInfoChanged.subscribe((info) => {
-  console.log("info", info);
-});
 
 let socket = new WebSocket(SOCKET_URL);
 let currentInfo: PresenterInfo;

@@ -82,7 +82,6 @@ export default makeScene2D(function* (view) {
     "Allgemein / Ebbinghaus-Vergessenskurve",
     1
   );
-  yield* view.scale(0.5, 0.5);
   const imageCite = createRef<Img>();
   view.add(<Img ref={imageCite} src={cite} y={150} opacity={0} />);
   yield* imageCite().opacity(1, 1);

@@ -1,5 +1,7 @@
 import { Presenter, PresenterInfo, Vector2, Project } from "@motion-canvas/core";
-import project from "../public/animations/project.js";
+import projectImport from "../public/animations/project.js";
+
+const project: Project = projectImport;
 
 const ENDPOINT = "wss://jannekeipert.de";
 

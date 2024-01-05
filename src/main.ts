@@ -29,46 +29,48 @@ const controllMapping = {
 
 let IS_OWNER = false;
 let ownerSocket: WebSocket | null = null;
+let providedPassword;
 
 document.body.append(presenter.stage.finalBuffer);
 
-const requestControll = () => {
-  console.log("Trying to become host");
-  const providedPassword = window.prompt("Enter password", "password");
+const connectWebsocketSend = () => {
   const calculatedUrl = ENDPOINT + "/send-state/" + providedPassword;
 
   let receivedAutherized = false;
-  const connectWebsocketSend = () => {
-    ownerSocket = new WebSocket(calculatedUrl);
+  ownerSocket = new WebSocket(calculatedUrl);
 
-    ownerSocket.onclose = () => {
-      if (receivedAutherized) {
-        console.log("Websocket closed -> trying to reconnect");
-        ownerSocket = new WebSocket(calculatedUrl);
-      } else {
-        console.log("Closed because unauthorized");
-      }
-    };
-
-    ownerSocket.onerror = () => {
-      console.log("Error occured");
-      if (receivedAutherized) {
-        ownerSocket = new WebSocket(calculatedUrl);
-      }
-    };
-
-    ownerSocket.onmessage = (event) => {
-      console.log(event);
-      const message = event.data;
-      if (message == "authorized") {
-        console.log("You are in");
-        IS_OWNER = true;
-        takeControllButton.classList.add("isOwner");
-        receivedAutherized = true;
-      }
-    };
+  ownerSocket.onclose = () => {
+    if (receivedAutherized) {
+      console.log("Websocket closed -> trying to reconnect");
+      connectWebsocketSend();
+    } else {
+      console.log("Closed because unauthorized");
+    }
   };
 
+  ownerSocket.onerror = () => {
+    console.log("Error occured");
+    if (receivedAutherized) {
+      connectWebsocketSend();
+    } 
+  };
+
+  ownerSocket.onmessage = (event) => {
+    console.log(event);
+    const message = event.data;
+    if (message == "authorized") {
+      console.log("You are in");
+      console.log("authorized")
+      IS_OWNER = true;
+      takeControllButton.classList.add("isOwner");
+      receivedAutherized = true;
+    }
+  };
+}
+
+const requestControll = () => {
+  console.log("Trying to become host");
+  providedPassword = window.prompt("Enter password", "password");
   connectWebsocketSend();
 };
 
@@ -191,6 +193,9 @@ takeControllButton.classList.add("takecontrollButton");
 window.addEventListener("keydown", (event) => {
   const keyCode = event.keyCode;
   if (keyCode in controllMapping && IS_OWNER) {
+    if (!ownerSocket || !ownerSocket.OPEN) {
+      connectWebsocketSend();
+    }
     controllMapping[keyCode]();
   }
   if (keyCode == 70) {

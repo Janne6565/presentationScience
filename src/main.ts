@@ -30,7 +30,8 @@ socket.onclose = () => {
 };
 
 socket.onmessage = (message) => {
-  console.log(message);
+  console.log("Message", message);
+  console.log("CurrentInfo", currentInfo);
   try {
     const indexNow = parseInt(message.data);
     currentIndexShouldBe = indexNow;

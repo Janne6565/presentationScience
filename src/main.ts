@@ -131,13 +131,16 @@ presenter.onInfoChanged.subscribe((info) => {
 });
 
 presenter.present({
-  name: "Presentation",
+  name: "Presenter",
+  background: null,
+  size: new Vector2({
+      "x": 1920,
+      "y": 1080
+  }),
+  slide: project.slides[0].name,
   fps: 60,
-  slide: project.scenes[0].name,
-  size: new Vector2(1920, 1080),
-  resolutionScale: 1,
-  colorSpace: "srgb",
-  background: "transparent",
+  resolutionScale: 2,
+  colorSpace: "srgb"
 });
 
 var elem = document.documentElement;

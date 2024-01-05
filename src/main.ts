@@ -15,7 +15,9 @@ let currentIndexShouldBe = 0;
 const controllMapping = {
   32: () => {
     console.log(ownerSocket);
-    ownerSocket?.send(String(currentIndexShouldBe + 1));
+    if (currentInfo && currentInfo.isWaiting) {
+      ownerSocket?.send(String(currentIndexShouldBe + 1));
+    }
   },
   37: () => {
     if (currentIndexShouldBe > 0) {

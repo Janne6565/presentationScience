@@ -4,57 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background-color: #1a1a1a;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        canvas {
-            width: auto;
-            height: 100vh;
-        }
-</style>
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
-    <button onclick="toggleFullscreen()"></button>
     <script type="module" src="/src/main.ts"></script>
 </body>
-<script>
-    var elem = document.documentElement;
-    var isOpened = false;
-    
-    function toggleFullscreen() {
-        if (isOpened) {
-            closeFullscreen();
-        } else {
-            openFullscreen();
-        }
-        isOpened = !isOpened;
-    }
-    function openFullscreen() {
-      if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-      } else if (elem.webkitRequestFullscreen) { /* Safari */
-        elem.webkitRequestFullscreen();
-      } else if (elem.msRequestFullscreen) { /* IE11 */
-        elem.msRequestFullscreen();
-      }
-    }
-    
-    function closeFullscreen() {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.webkitExitFullscreen) { /* Safari */
-        document.webkitExitFullscreen();
-      } else if (document.msExitFullscreen) { /* IE11 */
-        document.msExitFullscreen();
-      }
-    }
-    </script>
 </html>

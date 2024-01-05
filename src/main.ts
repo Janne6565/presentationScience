@@ -29,7 +29,6 @@ socket.onclose = () => {
   socket = new WebSocket(SOCKET_URL);
 };
 
-
 socket.onmessage = (message) => {
   try {
     const indexNow = parseInt(message.data);

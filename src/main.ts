@@ -1,7 +1,7 @@
 import {Stage, Player, Presenter, PresenterInfo} from '@motion-canvas/core';
 import project from '../public/animations/project.js';
 
-const SOCKET_URL = "ws://localhost:8000/listen-state";
+const SOCKET_URL = "wss://jannekeipert.de/listen-state";
 
 
 const presenter = new Presenter(project);

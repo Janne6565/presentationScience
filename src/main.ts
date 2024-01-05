@@ -7,7 +7,7 @@ const ENDPOINT = "wss://jannekeipert.de";
 
 const SOCKET_URL = ENDPOINT + "/listen-state";
 
-let socket = new WebSocket(SOCKET_URL);
+let socket;
 let currentInfo: PresenterInfo;
 let currentIndexShouldBe = 0;
 
@@ -72,6 +72,7 @@ const requestControll = () => {
 };
 
 const connectWebsocketListen = () => {
+  socket = new WebSocket(SOCKET_URL);
   socket.onopen = () => {
     console.log("connected websocket");
   };

@@ -10,6 +10,7 @@ export default makeScene2D(function* (view) {
   view.add(
     <Txt
       ref={text}
+      fontFamily={"Roboto"}
       text={"Was ihr mitnehmen solltet"}
       fontSize={100}
       fill={"white"}
@@ -59,6 +60,7 @@ export default makeScene2D(function* (view) {
   view.add(
     <Txt
       ref={quellenText}
+      fontFamily={"Roboto"}
       text={`
       - TU München: Kognitives Training bei Alzheimer-Patienten unter Anwendung der "Spaced Retrieval Technik" - https://mediatum.ub.tum.de/doc/602551/602551.pdf [30.11.2023 - 09:00 Uhr]
       - https://catchthezenith.com/?s=Spaced+Repetition%3A+Spare+Zeit+und+vergesse+nicht+mehr [30.11.2023 - 09:22 Uhr]
@@ -80,11 +82,9 @@ export default makeScene2D(function* (view) {
     />
   );
 
-  yield* text().text("Quellen", .5);
+  yield* text().text("Quellen", 0.5);
 
   yield* quellenText().opacity(1, 1);
 
   yield* beginSlide("Finales Ende");
-
-
 });

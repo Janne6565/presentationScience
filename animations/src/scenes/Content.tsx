@@ -69,9 +69,21 @@ export default makeScene2D(function* (view) {
       alignItems={"center"}
       y={-400}
     >
-      <Txt ref={textSectionTitle} text="" fill={"white"} fontSize={80} />
+      <Txt
+        ref={textSectionTitle}
+        fontFamily={"Roboto"}
+        text=""
+        fill={"white"}
+        fontSize={80}
+      />
 
-      <Txt ref={textSubSectionTitle} text="" fill={"white"} fontSize={50} />
+      <Txt
+        ref={textSubSectionTitle}
+        fontFamily={"Roboto"}
+        text=""
+        fill={"white"}
+        fontSize={50}
+      />
     </Rect>
   );
   yield* beginSlide(
@@ -172,6 +184,7 @@ export default makeScene2D(function* (view) {
         arrowSize={10}
       >
         <Txt
+          fontFamily={"Roboto"}
           text="3 Tage"
           ref={texts.D3}
           fill={fillColor}
@@ -195,6 +208,7 @@ export default makeScene2D(function* (view) {
       >
         <Txt
           ref={texts.W1}
+          fontFamily={"Roboto"}
           text="1 Woche"
           fill={fillColor}
           fontSize={25}
@@ -217,6 +231,7 @@ export default makeScene2D(function* (view) {
       >
         <Txt
           ref={texts.M1}
+          fontFamily={"Roboto"}
           text="1 Monat"
           fill={fillColor}
           fontSize={25}
@@ -233,6 +248,7 @@ export default makeScene2D(function* (view) {
   view.add(
     <Txt
       ref={textLeft}
+      fontFamily={"Roboto"}
       text="Wissen"
       fill={"white"}
       fontSize={50}
@@ -245,6 +261,7 @@ export default makeScene2D(function* (view) {
   view.add(
     <Txt
       ref={textBottom}
+      fontFamily={"Roboto"}
       text="Zeit"
       fill={"white"}
       fontSize={50}
@@ -357,6 +374,7 @@ export default makeScene2D(function* (view) {
       fill={"rgba(255, 255, 255, 0.7)"}
       y={-225}
       opacity={1}
+      fontFamily={"Roboto"}
     />
   );
 
@@ -410,6 +428,7 @@ export default makeScene2D(function* (view) {
           shadowColor={"black"}
           fill={"white"}
           fontSize={100}
+          fontFamily={"Roboto"}
         />
       </Rect>
     ))

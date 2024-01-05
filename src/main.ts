@@ -37,7 +37,10 @@ socket.onmessage = (message) => {
     console.log("Index now", indexNow)
 
     currentIndexShouldBe = indexNow;
-    if (currentInfo && currentInfo.index && indexNow && indexNow > currentInfo.index) {
+    console.log("Current Info", currentInfo)
+    console.log(Boolean(currentInfo))
+    console.log(Boolean(currentInfo.index))
+    if (currentInfo && currentInfo.index && indexNow > currentInfo.index) {
       presenter.resume();
       console.log("Jumping to next slide because ", indexNow, " > ", currentInfo.index);
     }
@@ -53,8 +56,6 @@ presenter.onInfoChanged.subscribe((info) => {
   if (info && info.index && info.index > currentIndexShouldBe) {
     presenter.requestPreviousSlide();
   }
-
-  currentInfo = info;
   console.log(info);
 });
 

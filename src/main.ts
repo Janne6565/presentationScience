@@ -11,16 +11,6 @@ presenter.onInfoChanged.subscribe((info) => {
   console.log("info", info);
 });
 
-presenter.present({
-  name: 'Presentation',
-  fps: 24,
-  slide: project.scenes[0].name,
-  size: new Vector2(1920, 1080),
-  resolutionScale: 1,
-  colorSpace: 'srgb',
-  background: 'transparent',
-});
-
 let socket = new WebSocket(SOCKET_URL);
 let currentInfo: PresenterInfo | null = null;
 let currentIndexShouldBe = 0;
@@ -40,6 +30,7 @@ socket.onclose = () => {
 };
 
 socket.onmessage = (message) => {
+  console.log(message);
   try {
     const indexNow = parseInt(message.data);
     currentIndexShouldBe = indexNow;
@@ -61,4 +52,14 @@ presenter.onInfoChanged.subscribe((info) => {
 
   currentInfo = info;
   console.log(info);
+});
+
+presenter.present({
+  name: 'Presentation',
+  fps: 24,
+  slide: project.scenes[0].name,
+  size: new Vector2(1920, 1080),
+  resolutionScale: 1,
+  colorSpace: 'srgb',
+  background: 'transparent',
 });

@@ -2,6 +2,7 @@ import { Presenter, PresenterInfo, Vector2, Project } from "@motion-canvas/core"
 import projectImport from "../public/animations/project.js";
 
 const project: Project = projectImport;
+const presenter = new Presenter(project);
 
 const ENDPOINT = "wss://jannekeipert.de";
 
@@ -27,7 +28,6 @@ const controllMapping = {
 };
 
 let IS_OWNER = false;
-const presenter = new Presenter(project);
 let ownerSocket: WebSocket | null = null;
 
 document.body.append(presenter.stage.finalBuffer);
@@ -63,6 +63,7 @@ const requestControll = () => {
       if (message == "authorized") {
         console.log("You are in");
         IS_OWNER = true;
+        takeControllButton.classList.add("isOwner");
         receivedAutherized = true;
       }
     };

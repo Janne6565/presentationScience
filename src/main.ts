@@ -56,7 +56,7 @@ presenter.onInfoChanged.subscribe((info) => {
 
 presenter.present({
   name: 'Presentation',
-  fps: 24,
+  fps: 60,
   slide: project.scenes[0].name,
   size: new Vector2(1920, 1080),
   resolutionScale: 1,

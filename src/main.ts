@@ -30,17 +30,10 @@ socket.onclose = () => {
 };
 
 socket.onmessage = (message) => {
-  console.log("Message", message);
-  console.log("CurrentInfo", currentInfo);
   try {
     const indexNow = parseInt(message.data);
-    console.log("Index now", indexNow)
-
     currentIndexShouldBe = indexNow;
-    console.log("Current Info", currentInfo)
-    console.log(Boolean(currentInfo))
-    console.log(Boolean(currentInfo.index))
-    if (currentInfo && currentInfo.index && indexNow > currentInfo.index) {
+    if (currentInfo && currentInfo.index != null && indexNow > currentInfo.index) {
       presenter.resume();
       console.log("Jumping to next slide because ", indexNow, " > ", currentInfo.index);
     }

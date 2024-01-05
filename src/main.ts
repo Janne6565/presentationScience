@@ -15,7 +15,9 @@ const controllMapping = {
     ownerSocket?.send(String(currentIndexShouldBe + 1));
   },
   37: () => {
-    ownerSocket?.send(String(currentIndexShouldBe - 1));
+    if (currentIndexShouldBe > 0) {
+      ownerSocket?.send(String(currentIndexShouldBe - 1));
+    }
   },
   39: () => {
     ownerSocket?.send(String(currentIndexShouldBe + 1));

@@ -12,7 +12,7 @@ let socket;
 let currentInfo: PresenterInfo;
 let currentIndexShouldBe = 0;
 
-const controllMapping = {
+const ownerControllMappings = {
   32: () => {
     console.log(ownerSocket);
     if (currentInfo && currentInfo.isWaiting) {
@@ -28,6 +28,21 @@ const controllMapping = {
     ownerSocket?.send(String(currentIndexShouldBe + 1));
   },
 };
+
+let isDevMode = false;
+
+const generalControllMappings = {
+    113: () => {
+      isDevMode = !isDevMode;
+
+      if (isDevMode) {
+        takeControllButton.classList.add("visible");
+      } else {
+        takeControllButton.classList.remove("visible");
+      }
+    }
+}
+
 
 let IS_OWNER = false;
 let ownerSocket: WebSocket | null = null;
@@ -194,11 +209,15 @@ takeControllButton.classList.add("takecontrollButton");
 
 window.addEventListener("keydown", (event) => {
   const keyCode = event.keyCode;
-  if (keyCode in controllMapping && IS_OWNER) {
+  if (keyCode in ownerControllMappings && IS_OWNER) {
     if (!ownerSocket || !ownerSocket.OPEN) {
       connectWebsocketSend();
     }
-    controllMapping[keyCode]();
+    ownerControllMappings[keyCode]();
+  } 
+
+  if (keyCode in generalControllMappings) {
+    generalControllMappings[keyCode]();
   }
   if (keyCode == 70) {
     toggleFullscreen();

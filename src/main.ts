@@ -11,6 +11,8 @@ const SOCKET_URL = ENDPOINT + "/listen-state";
 let socket;
 let currentInfo: PresenterInfo;
 let currentIndexShouldBe = 0;
+let lastMouseMove: number | null = null;
+
 
 const ownerControllMappings = {
   32: () => {
@@ -109,6 +111,14 @@ const connectWebsocketListen = () => {
 
   socket.onmessage = (message) => {
     console.log("Received message", message);
+    
+    if (lastMouseMove != null && lastMouseMove < Date.now() - 3000) {
+      fullScreenButton.classList.add("invisible");
+    } else {
+      fullScreenButton.classList.remove("invisible");
+    }
+
+
     try {
       const indexNow = parseInt(message.data);
       currentIndexShouldBe = indexNow;
@@ -226,3 +236,7 @@ window.addEventListener("keydown", (event) => {
 });
 
 document.body.append(takeControllButton);
+
+document.addEventListener("mousemove", (event) => {
+  lastMouseMove = Date.now();
+})

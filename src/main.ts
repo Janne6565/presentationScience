@@ -1,4 +1,9 @@
-import { Presenter, PresenterInfo, Vector2, Project } from "@motion-canvas/core";
+import {
+  Presenter,
+  PresenterInfo,
+  Vector2,
+  Project,
+} from "@motion-canvas/core";
 import projectImport from "../public/animations/project.js";
 
 const project: Project = projectImport;
@@ -12,7 +17,6 @@ let socket;
 let currentInfo: PresenterInfo;
 let currentIndexShouldBe = 0;
 let lastMouseMove: number | null = null;
-
 
 const ownerControllMappings = {
   32: () => {
@@ -34,17 +38,16 @@ const ownerControllMappings = {
 let isDevMode = false;
 
 const generalControllMappings = {
-    113: () => {
-      isDevMode = !isDevMode;
+  113: () => {
+    isDevMode = !isDevMode;
 
-      if (isDevMode) {
-        takeControllButton.classList.remove("invisible");
-      } else {
-        takeControllButton.classList.add("invisible");
-      }
+    if (isDevMode) {
+      takeControllButton.classList.remove("invisible");
+    } else {
+      takeControllButton.classList.add("invisible");
     }
-}
-
+  },
+};
 
 let IS_OWNER = false;
 let ownerSocket: WebSocket | null = null;
@@ -71,7 +74,7 @@ const connectWebsocketSend = () => {
     console.log("Error occured");
     if (receivedAutherized) {
       connectWebsocketSend();
-    } 
+    }
   };
 
   ownerSocket.onmessage = (event) => {
@@ -79,13 +82,13 @@ const connectWebsocketSend = () => {
     const message = event.data;
     if (message == "authorized") {
       console.log("You are in");
-      console.log("authorized")
+      console.log("authorized");
       IS_OWNER = true;
       takeControllButton.classList.add("isOwner");
       receivedAutherized = true;
     }
   };
-}
+};
 
 const requestControll = () => {
   console.log("Trying to become host");
@@ -111,13 +114,14 @@ const connectWebsocketListen = () => {
 
   socket.onmessage = (message) => {
     console.log("Received message", message);
-    
+
     if (lastMouseMove != null && lastMouseMove < Date.now() - 3000) {
       fullScreenButton.classList.add("invisible");
+      document.getElementsByTagName("body")[0].classList.add("mouseHide");
     } else {
       fullScreenButton.classList.remove("invisible");
+      document.getElementsByTagName("body")[0].classList.remove("mouseHide");
     }
-
 
     try {
       const indexNow = parseInt(message.data);
@@ -160,7 +164,6 @@ presenter.onInfoChanged.subscribe((info) => {
   if (info && info.index != null && info.index > currentIndexShouldBe) {
     presenter.requestPreviousSlide();
   }
-  console.log(info);
 });
 
 presenter.present({
@@ -170,7 +173,7 @@ presenter.present({
   slide: project.scenes[0].name,
   fps: 60,
   resolutionScale: 2,
-  colorSpace: "srgb"
+  colorSpace: "srgb",
 });
 
 var elem = document.documentElement;
@@ -225,7 +228,7 @@ window.addEventListener("keydown", (event) => {
       connectWebsocketSend();
     }
     ownerControllMappings[keyCode]();
-  } 
+  }
 
   if (keyCode in generalControllMappings) {
     generalControllMappings[keyCode]();
@@ -239,4 +242,10 @@ document.body.append(takeControllButton);
 
 document.addEventListener("mousemove", (event) => {
   lastMouseMove = Date.now();
-})
+  if (fullScreenButton.classList.contains("invisible")) {
+    fullScreenButton.classList.remove("invisible");
+  }
+  if (document.body.classList.contains("mouseHide")) {
+    document.body.classList.remove("mouseHide");
+  }
+});

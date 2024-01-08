@@ -50,3 +50,7 @@ button > img {
 .invisible {
     opacity: 0;
 }
+
+.mouseHide {
+    cursor: none;
+}

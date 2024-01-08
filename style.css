@@ -43,7 +43,7 @@ button > img {
     right: 15px;
 }
 
-.takecontrollButton.isOwner {
+.isOwner {
     opacity: 1;
 }
 

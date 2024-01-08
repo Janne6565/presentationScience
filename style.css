@@ -12,7 +12,9 @@ body {
 
 canvas {
     width: auto;
-    height: 100vh;
+    height: auto;
+    max-height: 100vh;
+    max-width: 100vw;
 }
 
 button {

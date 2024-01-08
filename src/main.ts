@@ -205,7 +205,8 @@ takeControllButton.appendChild(takeControllImage);
 takeControllButton.onclick = () => {
   requestControll();
 };
-takeControllButton.classList.add("takecontrollButton invisible");
+takeControllButton.classList.add("takecontrollButton");
+takeControllButton.classList.add("invisible");
 
 window.addEventListener("keydown", (event) => {
   const keyCode = event.keyCode;

@@ -41,13 +41,12 @@ button > img {
 .takecontrollButton {
     top: 15px;
     right: 15px;
-    opacity: 0;
 }
 
 .takecontrollButton.isOwner {
     opacity: 1;
 }
 
-.takecontrollButton.visible {
-    opacity: .7;
+.invisible {
+    opacity: 0;
 }

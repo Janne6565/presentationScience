@@ -36,9 +36,9 @@ const generalControllMappings = {
       isDevMode = !isDevMode;
 
       if (isDevMode) {
-        takeControllButton.classList.add("visible");
+        takeControllButton.classList.remove("invisible");
       } else {
-        takeControllButton.classList.remove("visible");
+        takeControllButton.classList.add("invisible");
       }
     }
 }
@@ -205,7 +205,7 @@ takeControllButton.appendChild(takeControllImage);
 takeControllButton.onclick = () => {
   requestControll();
 };
-takeControllButton.classList.add("takecontrollButton");
+takeControllButton.classList.add("takecontrollButton invisible");
 
 window.addEventListener("keydown", (event) => {
   const keyCode = event.keyCode;

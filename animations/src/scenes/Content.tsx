@@ -356,9 +356,9 @@ export default makeScene2D(function* (view) {
   labyrinthRef().remove();
 
   yield* beginSlide("Spacing_Anwendung SlideStart");
+  yield* textSectionTitle().text("Anwendung", 1);
   yield* textSubSectionTitle().text("Leitner System", 1);
   yield* beginSlide("Spacing_Anwendung Boxen Popup");
-  yield* textSectionTitle().text("Anwendung", 1);
 
   const COLOR_DOT_CORRECT = "rgba(0, 150, 0, 1)";
   const COLOR_DOT_WRONG = "rgba(200, 0, 0, 1)";

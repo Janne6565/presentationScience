@@ -6,12 +6,14 @@ import {
 } from "@motion-canvas/core";
 import projectImport from "../public/animations/project.js";
 
+const LOBBY_NAME = "lobby1"
+
 const project: Project = projectImport;
 const presenter = new Presenter(project);
 
 const ENDPOINT = "wss://jannekeipert.de";
 
-const SOCKET_URL = ENDPOINT + "/listen-state";
+const SOCKET_URL = ENDPOINT + "/listen-websocket?" + LOBBY_NAME;
 
 let socket;
 let currentInfo: PresenterInfo;
@@ -56,7 +58,7 @@ let providedPassword;
 document.body.append(presenter.stage.finalBuffer);
 
 const connectWebsocketSend = () => {
-  const calculatedUrl = ENDPOINT + "/send-state/" + providedPassword;
+  const calculatedUrl = ENDPOINT + "/host-websocket?" + LOBBY_NAME + "=" + providedPassword;
 
   let receivedAutherized = false;
   ownerSocket = new WebSocket(calculatedUrl);
